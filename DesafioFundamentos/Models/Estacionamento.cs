@@ -49,21 +49,15 @@ namespace DesafioFundamentos.Models
         public int QuantidadeHoras()
         {
             int horas = 0;
-            bool teste = false;
+            bool teste = true;
             do
             {
                 Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
-                int.TryParse(Console.ReadLine(), out horas);
-                if (horas < 0)
+                teste = int.TryParse(Console.ReadLine(), out horas);
+                if (horas < 0 || teste == false)
                 {
-                    Console.WriteLine("Valor de horas inválido! O valor tem que ser maior ou igual a zero.");
+                    Console.WriteLine("Valor de horas inválido! O valor tem que ser um numero e/ou maior ou igual a zero.\n");
                     teste = false;
-                }
-                else
-                {
-                    Console.WriteLine($"O numero de horas digitado é {horas}, confirma? digite S para continuar ou qualquer letra para repetir");
-                    string sn = Console.ReadLine().ToUpper();
-                    teste = sn == "S" ? true : false;
                 }
             } while (teste == false);
             return horas;
