@@ -29,7 +29,7 @@ namespace DesafioFundamentos.Models
             {
                 decimal valorTotal = 0;
 
-                valorTotal = ConfereECalculaHoras();
+                valorTotal = CalculaPreco(QuantidadeHoras());
 
                 veiculos.Remove(placa);
                 Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}");
@@ -40,28 +40,35 @@ namespace DesafioFundamentos.Models
             }
         }
 
+        public decimal CalculaPreco(int horas)
+        {
+            return precoInicial + precoPorHora * horas;
+        }
+
         //Executa loops para conferir a validade do valor digitado em horas.
-        public decimal ConfereECalculaHoras()
+        public int QuantidadeHoras()
         {
             int horas = 0;
-            Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
-            int.TryParse(Console.ReadLine(), out horas);
-            if (horas < 0)
+            bool teste = false;
+            do
             {
-                Console.WriteLine("Valor de horas inválido! O valor tem que ser maior ou igual a zero.");
-                return ConfereECalculaHoras();
-            }
-            Console.WriteLine($"O numero de horas digitado é {horas}, confirma? digite S para continuar ou qualquer letra para repetir");
-            string sn = Console.ReadLine();
-            if (sn == "S" || sn == "s")
-            {
-                return precoInicial + precoPorHora * horas;
-            }
-            else
-            {
-                return ConfereECalculaHoras();
-            }
+                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
+                int.TryParse(Console.ReadLine(), out horas);
+                if (horas < 0)
+                {
+                    Console.WriteLine("Valor de horas inválido! O valor tem que ser maior ou igual a zero.");
+                    teste = false;
+                }
+                else
+                {
+                    Console.WriteLine($"O numero de horas digitado é {horas}, confirma? digite S para continuar ou qualquer letra para repetir");
+                    string sn = Console.ReadLine().ToUpper();
+                    teste = sn == "S" ? true : false;
+                }
+            } while (teste == false);
+            return horas;
         }
+
 
         public void ListarVeiculos()
         {
